@@ -1,18 +1,23 @@
-# Use the node:19.7.0-alpine base image
-FROM node:19.7.0-alpine
-
-# Set app folder as the working directory
-WORKDIR /app
-
-# Copy package.json and install dependencies
-COPY package.json /app
-RUN npm install
-
-# Copy the rest of the app's code into the container
-COPY . /app
-
-# Expose port 3000
+# Use the official Node.js image as a base
+FROM node:14
+ 
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+ 
+# Copy package.json and package-lock.json (if available) for efficient caching
+COPY package*.json ./
+ 
+# Install dependencies
+RUN npm install --production
+ 
+# Copy the rest of the application code
+COPY . .
+ 
+# Copy the static folder (for serving static files like index.html)
+COPY src/static /usr/src/app/static
+ 
+# Expose the port your app will run on (change this if needed)
 EXPOSE 3000
-
-# Set the default execution command
-CMD ["node", "src/index.js"]
+ 
+# Start the application
+CMD ["npm", "start"]
