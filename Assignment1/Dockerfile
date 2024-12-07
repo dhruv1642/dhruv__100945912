@@ -5,7 +5,7 @@ FROM node:16
 WORKDIR /usr/src/app
  
 # Copy package.json and package-lock.json (if available) for efficient caching
-COPY package*.json ./
+COPY Assignment1/package*.json ./
  
 # Install dependencies
 RUN npm install --production
@@ -14,7 +14,7 @@ RUN npm install --production
 COPY . .
  
 # Copy the static folder (for serving static files like index.html)
-COPY src/static /usr/src/app/static
+COPY Assignment1/src/static /usr/src/app/static
  
 # Expose the port your app will run on (change this if needed)
 EXPOSE 3000
