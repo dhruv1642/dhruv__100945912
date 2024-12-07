@@ -17,7 +17,7 @@ COPY . .
 COPY Assignment1/src/static /usr/src/app/static
  
 # Expose the port your app will run on (change this if needed)
-EXPOSE 8080
+EXPOSE 3000
  
 # Start the application
 CMD ["npm", "start"]
