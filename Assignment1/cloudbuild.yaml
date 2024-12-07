@@ -5,7 +5,13 @@ steps:
       - 'build'
       - '-t'
       - 'us-central1-docker.pkg.dev/crucial-bloom-441721-v1/group-repo/app:$SHORT_SHA'
+      - '-f'
+      - './Dockerfile' # Ensure Dockerfile path is correct
       - '.'
+    # Add additional volume to improve performance (optional for large builds)
+    volumes:
+      - name: 'docker-cache'
+        path: '/cache'
 
   # Step 2: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -32,5 +38,11 @@ steps:
 options:
   logging: CLOUD_LOGGING_ONLY  # Logs only in Cloud Logging
 
+# Specify the image to push after a successful build
 images:
   - 'us-central1-docker.pkg.dev/crucial-bloom-441721-v1/group-repo/app:$SHORT_SHA'
+
+# Optional: Cache configuration for Docker builds (improves performance for repetitive builds)
+volumes:
+  - name: 'docker-cache'
+    path: '/cache'
